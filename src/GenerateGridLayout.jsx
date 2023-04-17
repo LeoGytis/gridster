@@ -1,33 +1,40 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-const GenerateGridLayout = () => {
+const GenerateGridLayout = ({ onGenerate }) => {
   const [rows, setRows] = useState(0);
   const [columns, setColumns] = useState(0);
 
   const handleRowsChange = (event) => {
-    setRows(event.target.value);
+    const value = parseInt(event.target.value);
+    if (isNaN(value) || value < 1 || value > 20) {
+      return;
+    }
+    setRows(value);
   };
 
   const handleColumnsChange = (event) => {
-    setColumns(event.target.value);
+    const value = parseInt(event.target.value);
+    if (isNaN(value) || value < 1 || value > 20) {
+      return;
+    }
+    setColumns(value);
   };
 
   const handleGenerateClick = () => {
-    console.log(`Generating layout with ${rows} rows and ${columns} columns`);
-    // Generate layout logic here
+    onGenerate(rows, columns);
   };
 
   return (
     <MainContainer>
       <InputValue>
         Rows
-        <GridInput type="text" min={1} max={20} value={rows} onChange={handleRowsChange} />
+        <GridInput type="text" value={rows} onChange={handleRowsChange} />
       </InputValue>
       x
       <InputValue>
         Columns
-        <GridInput type="text" min={1} max={20} value={columns} onChange={handleColumnsChange} />
+        <GridInput type="text" value={columns} onChange={handleColumnsChange} />
       </InputValue>
 
       <GenerateButton onClick={handleGenerateClick}>Generate</GenerateButton>
