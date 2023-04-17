@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-const GenerateGridLayout = ({ onGenerate }) => {
-  const [rows, setRows] = useState(0);
-  const [columns, setColumns] = useState(0);
+const GridController = ({ onGenerate }) => {
+  const [rows, setRows] = useState(10);
+  const [columns, setColumns] = useState(10);
 
   const handleRowsChange = (event) => {
     const value = parseInt(event.target.value);
@@ -29,12 +29,12 @@ const GenerateGridLayout = ({ onGenerate }) => {
     <MainContainer>
       <InputValue>
         Rows
-        <GridInput type="text" value={rows} onChange={handleRowsChange} />
+        <GridInput type="text" placeholder="10" value={rows} onChange={handleRowsChange} />
       </InputValue>
       x
       <InputValue>
         Columns
-        <GridInput type="text" value={columns} onChange={handleColumnsChange} />
+        <GridInput type="text" placeholder="10" value={columns} onChange={handleColumnsChange} />
       </InputValue>
 
       <GenerateButton onClick={handleGenerateClick}>Generate</GenerateButton>
@@ -42,7 +42,7 @@ const GenerateGridLayout = ({ onGenerate }) => {
   );
 };
 
-export default GenerateGridLayout;
+export default GridController;
 
 
 const MainContainer = styled.div`
@@ -51,9 +51,10 @@ const MainContainer = styled.div`
   align-content: flex-end;
   align-items: center;
   gap: 20px;
-  padding: 20px 200px 20px 40px;
+  padding: 20px 150px 20px 40px;
   background-color: #F1F1F1;
   border-radius: 5px;
+  margin-bottom: 40px;
 `;
 
 const InputValue = styled.div`

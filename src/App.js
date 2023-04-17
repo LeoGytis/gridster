@@ -1,23 +1,20 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import GenerateGridLayout from "./GenerateGridLayout";
+import GridController from "./GridController";
 import GridLayout from "./GirdLayout";
 
 function App() {
-  const [gridData, setGridData] = useState(null);
+  const [gridData, setGridData] = useState({ rows: 10, columns: 10 });
 
   const handleGenerate = (rows, columns) => {
-    console.log(`Generating grid with ${rows} rows and ${columns} columns`);
     setGridData({ rows, columns });
-    console.log("🚩 => setGridData:", gridData.rows);
-    console.log("🚩 => setGridData:", gridData.columns);
   };
 
   return (
     <>
       <MainContainer>
         <SimpleContainer>
-          <GenerateGridLayout onGenerate={handleGenerate} />
+          <GridController onGenerate={handleGenerate} />
           {gridData && (
             <GridLayout rows={gridData.rows} columns={gridData.columns} />
           )}
@@ -34,7 +31,6 @@ const MainContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 100px;
   background-color: #282c34;
 `;
 
