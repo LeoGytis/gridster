@@ -4,8 +4,8 @@ import styled from 'styled-components';
 const GridController = ({ onGenerate }) => {
   const [rows, setRows] = useState(10);
   const [columns, setColumns] = useState(10);
-  const startNode = [0, getRandomInt(0, rows - 1)]; // kodel nebuna 9?
-  const endNode = [columns - 1, getRandomInt(0, rows - 1)]; 
+  const startNode = [getRandomInt(0, rows ), 0]; // kodel nebuna 9?
+  const endNode = [getRandomInt(0, rows), columns - 1]; 
 
   function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -29,10 +29,7 @@ const GridController = ({ onGenerate }) => {
     setColumns(value);
   };
 
-
-
   const handleGenerateClick = () => {
-    
     onGenerate(rows, columns, startNode, endNode);
   };
 

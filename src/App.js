@@ -6,8 +6,8 @@ import { Grid, AStarFinder } from "pathfinding";
 
 function App() {
   const [gridData, setGridData] = useState({ rows: 10, columns: 10 });
-  const [gridStartNode, setGridStartNode] = useState();
-  const [gridEndNode, setGridEndNode] = useState();
+  const [gridStartNode, setGridStartNode] = useState([]);
+  const [gridEndNode, setGridEndNode] = useState([]);
 
   const handleGenerateGrid = (rows, columns, startNode, endNode) => {
     setGridData({ rows, columns });
@@ -21,14 +21,14 @@ function App() {
   // const start = grid.getNode(0, 0);
   // const end = grid.getNode(3, 2);
   // const path = finder.findPath(start, end, grid);
-  // const path = finder.findPath(
-  //   gridStartNode[0],
-  //   gridStartNode[1],
-  //   gridEndNode[0],
-  //   gridEndNode[1],
-  //   grid
-  // );
-  // console.log("🚩 => path:", path);
+  const path = finder.findPath(
+    gridStartNode[0],
+    gridStartNode[1],
+    gridEndNode[0],
+    gridEndNode[1],
+    grid
+  );
+  console.log("🚩 => path:", path);
 
   return (
     <>
@@ -41,6 +41,7 @@ function App() {
               columns={gridData.columns}
               start={gridStartNode}
               end={gridEndNode}
+              path={path}
             />
           )}
         </SimpleContainer>

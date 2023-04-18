@@ -1,16 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const GridLayout = ({ rows, columns, start, end }) => {
+const GridLayout = ({ rows, columns, start, end, path }) => {
   return (
     <GridLayoutContainer rows={rows} columns={columns}>
       {Array(rows * columns)
         .fill()
         .map((_, i) => {
-          if (i === start) {
+          const [startRow, startCol] = start;
+          const [endRow, endCol] = end;
+
+          const isPathSquare = path.some(([row, col]) => row === Math.floor(i / columns) && col === i % columns);
+
+          if (i === startRow * columns + startCol) {
             return <StartGridSquare key={i} />;
-          } else if (i === end) {
+          } else if (i === endRow * columns + endCol) {
             return <EndGridSquare key={i} />;
+          } else if (isPathSquare) {
+            return <PathGridSquare key={i} />;
           } else {
             return <GridSquare key={i} />;
           }
@@ -36,15 +43,13 @@ const GridSquare = styled.div`
 `;
 
 const StartGridSquare = styled(GridSquare)`
-  background-color: green;
+  background-color: #7ED321;
 `;
 
 const EndGridSquare = styled(GridSquare)`
-  background-color: red;
+  background-color: #639530;
 `;
 
-
-
-
-
-
+const PathGridSquare = styled(GridSquare)`
+  background-color: #FFD700;
+`;
