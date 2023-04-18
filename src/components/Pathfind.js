@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Node from "./Node";
 
 const rows = 5;
 const cols = 5;
@@ -43,7 +44,13 @@ const Pathfind = () => {
   const gridWithNode = () => {
     <div>
       {Grid.map((row, rowIndex) => {
-        return <div key={rowIndex}>{row.map((col, colIndex) => {})}</div>;
+        return (
+          <div key={rowIndex}>
+            {row.map((col, colIndex) => {
+              return <Node key={colIndex} />;
+            })}
+          </div>
+        );
       })}
     </div>;
   };
@@ -52,6 +59,7 @@ const Pathfind = () => {
   return (
     <div>
       <h1>PathFind Component</h1>
+      {gridWithNode}
     </div>
   );
 };
