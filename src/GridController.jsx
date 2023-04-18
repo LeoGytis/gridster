@@ -31,7 +31,9 @@ const GridController = ({ onGenerate }) => {
         Rows
         <GridInput type="text" placeholder="10" value={rows} onChange={handleRowsChange} />
       </InputValue>
-      x
+      <Sign>
+        x
+      </Sign>
       <InputValue>
         Columns
         <GridInput type="text" placeholder="10" value={columns} onChange={handleColumnsChange} />
@@ -47,10 +49,8 @@ export default GridController;
 
 const MainContainer = styled.div`
   display: flex;
-  /* justify-content: space-between; */
-  align-content: flex-end;
-  align-items: center;
-  gap: 20px;
+  align-items: flex-end;
+  gap: 16px;
   padding: 20px 150px 20px 40px;
   background-color: #F1F1F1;
   border-radius: 5px;
@@ -60,6 +60,10 @@ const MainContainer = styled.div`
 const InputValue = styled.div`
 display: flex;
 flex-direction: column;
+`;
+
+const Sign = styled.div`
+  padding-bottom: 10px;
 `;
 
 const GridInput = styled.input`
@@ -76,7 +80,8 @@ const GenerateButton = styled.button`
   background-color: #4A90E2;
   color: white;
   border-radius: 5px;
-  padding: 10px 20px;
+  padding: 12px 20px;
+  margin-left: 10px;
   font-size: 16px;
   border: none;
   cursor: pointer;
