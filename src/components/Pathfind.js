@@ -27,12 +27,22 @@ const Pathfind = () => {
 
     setGrid(grid);
     createSpot(grid);
+    addNeighbours(grid);
   };
 
   const createSpot = (grid) => {
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
         grid[i][j] = new Spot(i, j);
+      }
+    }
+  };
+
+  //Add neighbours
+  const addNeighbours = (grid) => {
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        grid[i][j].addneighbours(grid);
       }
     }
   };
@@ -46,6 +56,16 @@ const Pathfind = () => {
     this.g = 0;
     this.f = 0;
     this.h = 0;
+    this.neighbours = [];
+    // this.previous = 0;
+    this.addneighbours = function (grid) {
+      let i = this.x;
+      let j = this.y;
+      if (i > 0) this.neighbours.push(grid[i - 1][j]);
+      if (i < rows - 1) this.neighbours.push(grid[i + 1][j]);
+      if (j > 0) this.neighbours.push(grid[i][j - 1]);
+      if (i < cols - 1) this.neighbours.push(grid[i][j + 1]);
+    };
   }
 
   //Grid with Node component

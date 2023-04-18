@@ -4,6 +4,14 @@ import styled from 'styled-components';
 const GridController = ({ onGenerate }) => {
   const [rows, setRows] = useState(10);
   const [columns, setColumns] = useState(10);
+  const startNode = [0, getRandomInt(0, rows - 1)]; // kodel nebuna 9?
+  const endNode = [columns - 1, getRandomInt(0, rows - 1)]; 
+
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); 
+  }
 
   const handleRowsChange = (event) => {
     const value = parseInt(event.target.value);
@@ -21,8 +29,11 @@ const GridController = ({ onGenerate }) => {
     setColumns(value);
   };
 
+
+
   const handleGenerateClick = () => {
-    onGenerate(rows, columns);
+    
+    onGenerate(rows, columns, startNode, endNode);
   };
 
   return (

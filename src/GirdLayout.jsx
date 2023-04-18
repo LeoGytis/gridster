@@ -1,14 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const GridLayout = ({ rows, columns }) => {
+const GridLayout = ({ rows, columns, start, end }) => {
   return (
     <GridLayoutContainer rows={rows} columns={columns}>
       {Array(rows * columns)
         .fill()
-        .map((_, i) => (
-          <GridSquare key={i} />
-        ))}
+        .map((_, i) => {
+          if (i === start) {
+            return <StartGridSquare key={i} />;
+          } else if (i === end) {
+            return <EndGridSquare key={i} />;
+          } else {
+            return <GridSquare key={i} />;
+          }
+        })}
     </GridLayoutContainer>
   );
 };
@@ -23,8 +29,22 @@ const GridLayoutContainer = styled.div`
 `;
 
 const GridSquare = styled.div`
- background-color: #F1F1F1;
+  background-color: #F1F1F1;
   border: 1px solid #D9D9D9;
   height: 50px;
   width: 50px;
 `;
+
+const StartGridSquare = styled(GridSquare)`
+  background-color: green;
+`;
+
+const EndGridSquare = styled(GridSquare)`
+  background-color: red;
+`;
+
+
+
+
+
+
