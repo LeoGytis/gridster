@@ -1,21 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import GridController from "./GridController";
 import GridLayout from "./GirdLayout";
 import { Grid, AStarFinder } from "pathfinding";
+import { generateGridMatrix } from "./generateGridMatrix";
 
 function App() {
   const [gridData, setGridData] = useState({ rows: 10, columns: 10 });
-  const [gridStartNode, setGridStartNode] = useState([]);
-  const [gridEndNode, setGridEndNode] = useState([]);
+  const [gridStartNode, setGridStartNode] = useState([0, 0]);
+  const [gridEndNode, setGridEndNode] = useState([9, 9]);
+  const [gridMatrix, setGridMatrix] = useState([]);
+
+  // useEffect(() => {
+  //   setGridMatrix(newMatrix);
+  // }, []);
 
   const handleGenerateGrid = (rows, columns, startNode, endNode) => {
     setGridData({ rows, columns });
     setGridStartNode(startNode);
     setGridEndNode(endNode);
+    setGridMatrix(generateGridMatrix(rows, columns));
   };
 
   const grid = new Grid(gridData.rows, gridData.columns);
+  // const newGrid = new Grid(gridMatrix);
+  // console.log("🚩 => newGrid:", newGrid);
+  console.log("🚩 => grid:", grid);
   const finder = new AStarFinder();
 
   // const start = grid.getNode(0, 0);

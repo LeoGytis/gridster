@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const GridLayout = ({ rows, columns, start, end, path }) => {
+const GridNodesLayout = ({ rows, columns, start, end, path }) => {
   return (
     <GridLayoutContainer rows={rows} columns={columns}>
       {Array(rows * columns)
@@ -10,23 +10,23 @@ const GridLayout = ({ rows, columns, start, end, path }) => {
           const [startRow, startCol] = start;
           const [endRow, endCol] = end;
 
-          const isPathNode = path.some(([row, col]) => row === Math.floor(i / columns) && col === i % columns);
+          const isPathSquare = path.some(([row, col]) => row === Math.floor(i / columns) && col === i % columns);
 
           if (i === startRow * columns + startCol) {
-            return <StartGridNode key={i} />;
+            return <StartGridSquare key={i} />;
           } else if (i === endRow * columns + endCol) {
-            return <EndGridNode key={i} />;
-          } else if (isPathNode) {
-            return <PathGridNode key={i} />;
+            return <EndGridSquare key={i} />;
+          } else if (isPathSquare) {
+            return <PathGridSquare key={i} />;
           } else {
-            return <GridNode key={i} />;
+            return <GridSquare key={i} />;
           }
         })}
     </GridLayoutContainer>
   );
 };
 
-export default GridLayout;
+export default GridNodesLayout;
 
 const GridLayoutContainer = styled.div`
   display: grid;
@@ -35,28 +35,21 @@ const GridLayoutContainer = styled.div`
   background-color: #dadada;
 `;
 
-const GridNode = styled.button`
+const GridSquare = styled.div`
   background-color: #F1F1F1;
   border: 1px solid #D9D9D9;
   height: 50px;
   width: 50px;
-  cursor: pointer;
-  &:hover {
-    background-color: #F8F8F8;
-  }
-  &:active {
-    background-color: #E2E2E2;
-  }
 `;
 
-const StartGridNode = styled(GridNode)`
+const StartGridSquare = styled(GridSquare)`
   background-color: #7ED321;
 `;
 
-const EndGridNode = styled(GridNode)`
+const EndGridSquare = styled(GridSquare)`
   background-color: #639530;
 `;
 
-const PathGridNode = styled(GridNode)`
+const PathGridSquare = styled(GridSquare)`
   background-color: #FFD700;
 `;
