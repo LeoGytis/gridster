@@ -1,20 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 import { Grid, AStarFinder } from "pathfinding";
 import { generateGridMatrix } from "./generateGridMatrix";
 
-
-
 const GridLayout = ({ rows, columns, gridStartNode, gridEndNode }) => {
-
   const [gridMatrix, setGridMatrix] = useState([]);
 
-    useEffect(() => {
-      setGridMatrix(generateGridMatrix(rows, columns));
-      console.log("🚩 => gridMatrix:", gridMatrix);
-    }, []);
+  // useEffect(() => {
+  //   setGridMatrix(generateGridMatrix(rows, columns));
+  //   console.log("🚩 => gridMatrix:", gridMatrix);
+  // }, []);
+
+  function setAllNodesUnwalkable(obj) {
+    obj.nodes.forEach((row) => {
+      row.forEach((node) => {
+        node.walkable = false;
+      });
+    });
+  }
 
   const grid = new Grid(rows, columns);
+  console.log("🚩 => grid:", grid);
   const pathFinder = new AStarFinder();
 
   const path = pathFinder.findPath(
@@ -24,12 +30,11 @@ const GridLayout = ({ rows, columns, gridStartNode, gridEndNode }) => {
     gridEndNode[1],
     grid
   );
-  grid.setWalkableAt(5, 5, false);
-  grid.setWalkableAt(0, 1, false);
-  grid.setWalkableAt(0, 2, false);
-  grid.setWalkableAt(0, 3, false);
-  grid.setWalkableAt(0, 4, false);
-
+  // grid.setWalkableAt(5, 5, false);
+  // grid.setWalkableAt(0, 1, false);
+  // grid.setWalkableAt(0, 2, false);
+  // grid.setWalkableAt(0, 3, false);
+  // grid.setWalkableAt(0, 4, false);
 
   const handleNodeClick = (row, col) => {
     grid.setWalkableAt(row, col, true);
@@ -58,39 +63,42 @@ const GridLayout = ({ rows, columns, gridStartNode, gridEndNode }) => {
           } else if (isClearNode) {
             return <ClearGridNode key={i} />;
           } else {
-            return <GridNode key={i} onClick={() => handleNodeClick(row, col)}>{row} - {col}</GridNode>;
+            return (
+              <GridNode key={i} onClick={() => handleNodeClick(row, col)}>
+                {row} - {col}
+              </GridNode>
+            );
           }
         })}
     </GridLayoutContainer>
   );
-   
 };
 
 export default GridLayout;
 
 const GridLayoutContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(${props => props.columns}, 1fr);
-  grid-template-rows: repeat(${props => props.rows}, 1fr);
+  grid-template-columns: repeat(${(props) => props.columns}, 1fr);
+  grid-template-rows: repeat(${(props) => props.rows}, 1fr);
   background-color: #dadada;
 `;
 
 const GridNode = styled.button`
-  background-color: #F1F1F1;
-  border: 1px solid #D9D9D9;
+  background-color: #f1f1f1;
+  border: 1px solid #d9d9d9;
   height: 50px;
   width: 50px;
   cursor: pointer;
   &:hover {
-    background-color: #F8F8F8;
+    background-color: #f8f8f8;
   }
   &:active {
-    background-color: #E2E2E2;
+    background-color: #e2e2e2;
   }
 `;
 
 const StartGridNode = styled(GridNode)`
-  background-color: #7ED321;
+  background-color: #7ed321;
 `;
 
 const EndGridNode = styled(GridNode)`
@@ -98,7 +106,7 @@ const EndGridNode = styled(GridNode)`
 `;
 
 const PathGridNode = styled(GridNode)`
-  background-color: #FFD700;
+  background-color: #ffd700;
 `;
 
 const ClearGridNode = styled(GridNode)`
