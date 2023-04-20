@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Grid, AStarFinder } from "pathfinding";
+import { generateGridMatrix } from "./generateGridMatrix";
 
 
-const GridLayout = ({ rows, columns, gridStartNode, gridEndNode}) => {
 
-  const generatedGrid = new Grid(rows, columns);
+const GridLayout = ({ rows, columns, gridStartNode, gridEndNode }) => {
+
+  const [gridMatrix, setGridMatrix] = useState([]);
+
+    useEffect(() => {
+      setGridMatrix(generateGridMatrix(rows, columns));
+      console.log("🚩 => gridMatrix:", gridMatrix);
+    }, []);
+
+  const grid = new Grid(rows, columns);
   const pathFinder = new AStarFinder();
 
   const path = pathFinder.findPath(
@@ -13,31 +22,48 @@ const GridLayout = ({ rows, columns, gridStartNode, gridEndNode}) => {
     gridStartNode[1],
     gridEndNode[0],
     gridEndNode[1],
-    generatedGrid
+    grid
   );
+  grid.setWalkableAt(5, 5, false);
+  grid.setWalkableAt(0, 1, false);
+  grid.setWalkableAt(0, 2, false);
+  grid.setWalkableAt(0, 3, false);
+  grid.setWalkableAt(0, 4, false);
+
+
+  const handleNodeClick = (row, col) => {
+    grid.setWalkableAt(row, col, true);
+  };
 
   return (
     <GridLayoutContainer rows={rows} columns={columns}>
-      {Array(rows * columns)
+      {Array(grid.height * grid.width)
         .fill()
         .map((_, i) => {
           const [startRow, startCol] = gridStartNode;
           const [endRow, endCol] = gridEndNode;
 
-          const isPathNode = path.some(([row, col]) => row === Math.floor(i / columns) && col === i % columns);
+          const row = Math.floor(i / columns);
+          const col = i % columns;
 
-          if (i === startRow * columns + startCol) {
+          const isPathNode = path.some(([r, c]) => r === row && c === col);
+          const isClearNode = grid.nodes[i] && !grid.nodes[i].walkable;
+
+          if (row === startRow && col === startCol) {
             return <StartGridNode key={i} />;
-          } else if (i === endRow * columns + endCol) {
+          } else if (row === endRow && col === endCol) {
             return <EndGridNode key={i} />;
           } else if (isPathNode) {
             return <PathGridNode key={i} />;
+          } else if (isClearNode) {
+            return <ClearGridNode key={i} />;
           } else {
-            return <GridNode key={i} />;
+            return <GridNode key={i} onClick={() => handleNodeClick(row, col)}>{row} - {col}</GridNode>;
           }
         })}
     </GridLayoutContainer>
   );
+   
 };
 
 export default GridLayout;
@@ -73,4 +99,8 @@ const EndGridNode = styled(GridNode)`
 
 const PathGridNode = styled(GridNode)`
   background-color: #FFD700;
+`;
+
+const ClearGridNode = styled(GridNode)`
+  background-color: yellowgreen;
 `;
