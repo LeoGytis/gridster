@@ -19,26 +19,23 @@ function App() {
     setGridData({ rows, columns });
     setGridStartNode(startNode);
     setGridEndNode(endNode);
-    setGridMatrix(generateGridMatrix(rows, columns));
+    // setGridMatrix(generateGridMatrix(rows, columns));
   };
 
-  const grid = new Grid(gridData.rows, gridData.columns);
+  // const grid = new Grid(gridData.rows, gridData.columns);
   // const newGrid = new Grid(gridMatrix);
-  // console.log("🚩 => newGrid:", newGrid);
-  console.log("🚩 => grid:", grid);
-  const finder = new AStarFinder();
+  // const finder = new AStarFinder();
 
   // const start = grid.getNode(0, 0);
   // const end = grid.getNode(3, 2);
   // const path = finder.findPath(start, end, grid);
-  const path = finder.findPath(
-    gridStartNode[0],
-    gridStartNode[1],
-    gridEndNode[0],
-    gridEndNode[1],
-    grid
-  );
-  console.log("🚩 => path:", path);
+  // const path = finder.findPath(
+  //   gridStartNode[0],
+  //   gridStartNode[1],
+  //   gridEndNode[0],
+  //   gridEndNode[1],
+  //   grid
+  // );
 
   return (
     <>
@@ -49,9 +46,9 @@ function App() {
             <GridLayout
               rows={gridData.rows}
               columns={gridData.columns}
-              start={gridStartNode}
-              end={gridEndNode}
-              path={path}
+              gridStartNode={gridStartNode}
+              gridEndNode={gridEndNode}
+              // path={path}
             />
           )}
         </SimpleContainer>

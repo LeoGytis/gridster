@@ -3,10 +3,7 @@ import styled from 'styled-components';
 import { Grid, AStarFinder } from "pathfinding";
 
 
-const GridLayout = ({ rows, columns}) => {
-
-  const [gridStartNode, setGridStartNode] = useState([0, 0]);
-  const [gridEndNode, setGridEndNode] = useState([9, 9]);
+const GridLayout = ({ rows, columns, gridStartNode, gridEndNode}) => {
 
   const generatedGrid = new Grid(rows, columns);
   const pathFinder = new AStarFinder();
