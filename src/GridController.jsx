@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+
 const GridController = ({ onGenerate }) => {
   const [rows, setRows] = useState(10);
   const [columns, setColumns] = useState(10);

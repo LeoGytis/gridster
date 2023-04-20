@@ -1,14 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Grid, AStarFinder } from "pathfinding";
 
-const GridLayout = ({ rows, columns, start, end, path }) => {
+
+const GridLayout = ({ rows, columns}) => {
+
+  const [gridStartNode, setGridStartNode] = useState([0, 0]);
+  const [gridEndNode, setGridEndNode] = useState([9, 9]);
+
+  const generatedGrid = new Grid(rows, columns);
+  const pathFinder = new AStarFinder();
+
+  const path = pathFinder.findPath(
+    gridStartNode[0],
+    gridStartNode[1],
+    gridEndNode[0],
+    gridEndNode[1],
+    generatedGrid
+  );
+
   return (
     <GridLayoutContainer rows={rows} columns={columns}>
       {Array(rows * columns)
         .fill()
         .map((_, i) => {
-          const [startRow, startCol] = start;
-          const [endRow, endCol] = end;
+          const [startRow, startCol] = gridStartNode;
+          const [endRow, endCol] = gridEndNode;
 
           const isPathNode = path.some(([row, col]) => row === Math.floor(i / columns) && col === i % columns);
 
