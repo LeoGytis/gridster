@@ -3,7 +3,12 @@ import styled from "styled-components";
 import { Grid, AStarFinder } from "pathfinding";
 import { generateGridMatrix } from "./generateGridMatrix";
 
-const GridLayout = ({ rows, columns, gridStartNode, gridEndNode }) => {
+const GridLayout = ({
+  rowsCount,
+  columnsCount,
+  gridStartNode,
+  gridEndNode
+}) => {
   const [gridMatrix, setGridMatrix] = useState([]);
 
   // useEffect(() => {
@@ -19,7 +24,7 @@ const GridLayout = ({ rows, columns, gridStartNode, gridEndNode }) => {
     });
   }
 
-  const grid = new Grid(rows, columns);
+  const grid = new Grid(rowsCount, columnsCount);
   console.log("🚩 => grid:", grid);
   const pathFinder = new AStarFinder();
 
@@ -41,15 +46,15 @@ const GridLayout = ({ rows, columns, gridStartNode, gridEndNode }) => {
   };
 
   return (
-    <GridLayoutContainer rows={rows} columns={columns}>
+    <GridLayoutContainer rowsCount={rowsCount} columnsCount={columnsCount}>
       {Array(grid.height * grid.width)
         .fill()
         .map((_, i) => {
           const [startRow, startCol] = gridStartNode;
           const [endRow, endCol] = gridEndNode;
 
-          const row = Math.floor(i / columns);
-          const col = i % columns;
+          const row = Math.floor(i / columnsCount);
+          const col = i % columnsCount;
 
           const isPathNode = path.some(([r, c]) => r === row && c === col);
           const isClearNode = grid.nodes[i] && !grid.nodes[i].walkable;
@@ -78,8 +83,8 @@ export default GridLayout;
 
 const GridLayoutContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(${(props) => props.columns}, 1fr);
-  grid-template-rows: repeat(${(props) => props.rows}, 1fr);
+  grid-template-columns: repeat(${(props) => props.columnsCount}, 1fr);
+  grid-template-rows: repeat(${(props) => props.rowsCount}, 1fr);
   background-color: #dadada;
 `;
 

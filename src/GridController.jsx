@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-
+import React, { useState } from "react";
+import styled from "styled-components";
 
 const GridController = ({ onGenerate }) => {
-  const [rows, setRows] = useState(10);
-  const [columns, setColumns] = useState(10);
-  const startNode = [getRandomInt(0, rows ), 0]; // kodel nebuna 9?
-  const endNode = [getRandomInt(0, rows), columns - 1]; 
+  const [rowsCount, setRowsCount] = useState(10);
+  const [columnsCount, setColumnsCount] = useState(10);
+  const startNode = [getRandomInt(0, rowsCount), 0]; // kodel nebuna 9?
+  const endNode = [getRandomInt(0, rowsCount), columnsCount - 1];
 
   function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min); 
+    return Math.floor(Math.random() * (max - min) + min);
   }
 
   const handleRowsChange = (event) => {
@@ -19,7 +18,7 @@ const GridController = ({ onGenerate }) => {
     if (isNaN(value) || value < 1 || value > 20) {
       return;
     }
-    setRows(value);
+    setRowsCount(value);
   };
 
   const handleColumnsChange = (event) => {
@@ -27,25 +26,33 @@ const GridController = ({ onGenerate }) => {
     if (isNaN(value) || value < 1 || value > 20) {
       return;
     }
-    setColumns(value);
+    setColumnsCount(value);
   };
 
   const handleGenerateClick = () => {
-    onGenerate(rows, columns, startNode, endNode);
+    onGenerate(rowsCount, columnsCount, startNode, endNode);
   };
 
   return (
     <MainContainer>
       <InputValue>
         Rows
-        <GridInput type="text" placeholder="10" value={rows} onChange={handleRowsChange} />
+        <GridInput
+          type="text"
+          placeholder="10"
+          value={rowsCount}
+          onChange={handleRowsChange}
+        />
       </InputValue>
-      <Sign>
-        x
-      </Sign>
+      <Sign>x</Sign>
       <InputValue>
         Columns
-        <GridInput type="text" placeholder="10" value={columns} onChange={handleColumnsChange} />
+        <GridInput
+          type="text"
+          placeholder="10"
+          value={columnsCount}
+          onChange={handleColumnsChange}
+        />
       </InputValue>
 
       <GenerateButton onClick={handleGenerateClick}>Generate</GenerateButton>
@@ -55,20 +62,19 @@ const GridController = ({ onGenerate }) => {
 
 export default GridController;
 
-
 const MainContainer = styled.div`
   display: flex;
   align-items: flex-end;
   gap: 16px;
   padding: 20px 150px 20px 40px;
-  background-color: #F1F1F1;
+  background-color: #f1f1f1;
   border-radius: 5px;
   margin-bottom: 40px;
 `;
 
 const InputValue = styled.div`
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Sign = styled.div`
@@ -86,7 +92,7 @@ const GridInput = styled.input`
 `;
 
 const GenerateButton = styled.button`
-  background-color: #4A90E2;
+  background-color: #4a90e2;
   color: white;
   border-radius: 5px;
   padding: 12px 20px;
@@ -95,7 +101,7 @@ const GenerateButton = styled.button`
   border: none;
   cursor: pointer;
   &:hover {
-    background-color: #76B5FF;
+    background-color: #76b5ff;
   }
   &:active {
     background-color: #235896;

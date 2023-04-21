@@ -6,7 +6,7 @@ import { Grid, AStarFinder } from "pathfinding";
 import { generateGridMatrix } from "./generateGridMatrix";
 
 function App() {
-  const [gridData, setGridData] = useState({ rows: 10, columns: 10 });
+  const [gridData, setGridData] = useState({ rowsCount: 10, columnsCount: 10 });
   const [gridStartNode, setGridStartNode] = useState([0, 0]);
   const [gridEndNode, setGridEndNode] = useState([9, 9]);
   const [gridMatrix, setGridMatrix] = useState([]);
@@ -15,8 +15,8 @@ function App() {
   //   setGridMatrix(newMatrix);
   // }, []);
 
-  const handleGenerateGrid = (rows, columns, startNode, endNode) => {
-    setGridData({ rows, columns });
+  const handleGenerateGrid = (rowsCount, columnsCount, startNode, endNode) => {
+    setGridData({ rowsCount, columnsCount });
     setGridStartNode(startNode);
     setGridEndNode(endNode);
     // setGridMatrix(generateGridMatrix(rows, columns));
@@ -44,8 +44,8 @@ function App() {
           <GridController onGenerate={handleGenerateGrid} />
           {gridData && (
             <GridLayout
-              rows={gridData.rows}
-              columns={gridData.columns}
+              rowsCount={gridData.rowsCount}
+              columnsCount={gridData.columnsCount}
               gridStartNode={gridStartNode}
               gridEndNode={gridEndNode}
               // path={path}
