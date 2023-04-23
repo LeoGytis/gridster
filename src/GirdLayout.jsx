@@ -3,46 +3,47 @@ import styled from "styled-components";
 import { Grid, AStarFinder } from "pathfinding";
 import { generateGridMatrix } from "./generateGridMatrix";
 
-const GridLayout = ({
-  rowsCount,
-  columnsCount,
-  gridStartNode,
-  gridEndNode
-}) => {
-  const [gridMatrix, setGridMatrix] = useState([]);
+const GridLayout = ({ rowsCount, columnsCount, startNode, endNode }) => {
+  const [gridMatrix, setGridMatrix] = useState([0, 1]);
+  const [gridLayout, setGridLayout] = useState(new Grid(10, 10));
 
-  // useEffect(() => {
-  //   setGridMatrix(generateGridMatrix(rows, columns));
-  //   console.log("🚩 => gridMatrix:", gridMatrix);
-  // }, []);
-
-  function setAllNodesUnwalkable(obj) {
-    obj.nodes.forEach((row) => {
-      row.forEach((node) => {
-        node.walkable = false;
-      });
-    });
+  function setAllNodesUnwalkable(grid) {
+    for (let i = 0; i < grid.nodes.length; i++) {
+      for (let j = 0; j < grid.nodes[i].length; j++) {
+        grid.setWalkableAt(i, j, false);
+      }
+    }
   }
-
   const grid = new Grid(rowsCount, columnsCount);
-  console.log("🚩 => grid:", grid);
+
+  useEffect(() => {
+    setGridMatrix(generateGridMatrix(rowsCount, columnsCount));
+    console.log("🚩 => gridMatrix:", gridMatrix);
+    const grid = new Grid(rowsCount, columnsCount);
+    // setGridLayout();
+    setGridLayout(grid);
+    console.log("🚩 => gridLayout:", gridLayout);
+  }, [rowsCount, columnsCount]);
+
+  // setGridLayout(grid);
+
+  // const grid = new Grid(gridMatrix);
+  // console.log("🚩 => grid:", grid);
   const pathFinder = new AStarFinder();
 
-  const path = pathFinder.findPath(
-    gridStartNode[0],
-    gridStartNode[1],
-    gridEndNode[0],
-    gridEndNode[1],
-    grid
-  );
+  // const path = pathFinder.findPath(
+  //   gridStartNode[0],
+  //   gridStartNode[1],
+  //   gridEndNode[0],
+  //   gridEndNode[1],
+  //   grid
+  // );
+
   // grid.setWalkableAt(5, 5, false);
-  // grid.setWalkableAt(0, 1, false);
-  // grid.setWalkableAt(0, 2, false);
-  // grid.setWalkableAt(0, 3, false);
-  // grid.setWalkableAt(0, 4, false);
+  // var gridBackup = grid.clone();
 
   const handleNodeClick = (row, col) => {
-    grid.setWalkableAt(row, col, true);
+    grid.setWalkableAt(row, col, false);
   };
 
   return (
@@ -50,22 +51,24 @@ const GridLayout = ({
       {Array(grid.height * grid.width)
         .fill()
         .map((_, i) => {
-          const [startRow, startCol] = gridStartNode;
-          const [endRow, endCol] = gridEndNode;
+          const [startRow, startCol] = startNode;
+          const [endRow, endCol] = endNode;
 
           const row = Math.floor(i / columnsCount);
           const col = i % columnsCount;
 
-          const isPathNode = path.some(([r, c]) => r === row && c === col);
-          const isClearNode = grid.nodes[i] && !grid.nodes[i].walkable;
+          // const isPathNode = path.some(([r, c]) => r === row && c === col);
+          const isClearNode = grid.nodes[i] && grid.nodes[i].walkable;
 
           if (row === startRow && col === startCol) {
             return <StartGridNode key={i} />;
           } else if (row === endRow && col === endCol) {
             return <EndGridNode key={i} />;
-          } else if (isPathNode) {
-            return <PathGridNode key={i} />;
-          } else if (isClearNode) {
+          }
+          // else if (isPathNode) {
+          //   return <PathGridNode key={i} />;
+          // }
+          else if (isClearNode) {
             return <ClearGridNode key={i} />;
           } else {
             return (

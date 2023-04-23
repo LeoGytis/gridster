@@ -6,36 +6,28 @@ import { Grid, AStarFinder } from "pathfinding";
 import { generateGridMatrix } from "./generateGridMatrix";
 
 function App() {
-  const [gridData, setGridData] = useState({ rowsCount: 10, columnsCount: 10 });
-  const [gridStartNode, setGridStartNode] = useState([0, 0]);
-  const [gridEndNode, setGridEndNode] = useState([9, 9]);
+  const [gridData, setGridData] = useState({
+    rowsCount: 10,
+    columnsCount: 10,
+    startNode: [0, 0],
+    endNode: [9, 9]
+  });
+  // const [gridStartNode, setGridStartNode] = useState([0, 0]);
+  // const [gridEndNode, setGridEndNode] = useState([9, 9]);
   const [gridMatrix, setGridMatrix] = useState([]);
 
   // useEffect(() => {
   //   setGridMatrix(newMatrix);
   // }, []);
 
-  const handleGenerateGrid = (rowsCount, columnsCount, startNode, endNode) => {
-    setGridData({ rowsCount, columnsCount });
-    setGridStartNode(startNode);
-    setGridEndNode(endNode);
-    // setGridMatrix(generateGridMatrix(rows, columns));
+  const handleGenerateGrid = ({
+    rowsCount,
+    columnsCount,
+    startNode,
+    endNode
+  }) => {
+    setGridData({ rowsCount, columnsCount, startNode, endNode });
   };
-
-  // const grid = new Grid(gridData.rows, gridData.columns);
-  // const newGrid = new Grid(gridMatrix);
-  // const finder = new AStarFinder();
-
-  // const start = grid.getNode(0, 0);
-  // const end = grid.getNode(3, 2);
-  // const path = finder.findPath(start, end, grid);
-  // const path = finder.findPath(
-  //   gridStartNode[0],
-  //   gridStartNode[1],
-  //   gridEndNode[0],
-  //   gridEndNode[1],
-  //   grid
-  // );
 
   return (
     <>
@@ -44,10 +36,11 @@ function App() {
           <GridController onGenerate={handleGenerateGrid} />
           {gridData && (
             <GridLayout
+              gridData={gridData}
               rowsCount={gridData.rowsCount}
               columnsCount={gridData.columnsCount}
-              gridStartNode={gridStartNode}
-              gridEndNode={gridEndNode}
+              startNode={gridData.startNode}
+              endNode={gridData.endNode}
               // path={path}
             />
           )}
