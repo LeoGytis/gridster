@@ -5,37 +5,42 @@ import { generateGridMatrix } from "./generateGridMatrix";
 
 const GridLayout = ({ gridData }) => {
   const [gridMatrix, setGridMatrix] = useState(generateGridMatrix(10, 10));
+  console.log("🚩 => gridMatrix:", gridMatrix);
   const [gridLayout, setGridLayout] = useState(new Grid(10, 10));
+  // const [startX, startY] = gridData.gridStartNode;
+  // const [endX, endY] = gridData.gridEndNode;
 
-  // function setAllNodesUnwalkable(grid) {
-  //   for (let i = 0; i < grid.nodes.length; i++) {
-  //     for (let j = 0; j < grid.nodes[i].length; j++) {
-  //       grid.setWalkableAt(i, j, false);
-  //     }
-  //   }
-  // }
   // const grid = new Grid(rowsCount, columnsCount);
 
   useEffect(() => {
     setGridMatrix(
       generateGridMatrix(gridData.rowsCount, gridData.columnsCount)
     );
-    // const grid = new Grid(rowsCount, columnsCount);
-    // setGridLayout();
-    // setGridLayout(grid);
+    const grid = new Grid(gridMatrix);
+    setGridLayout(grid);
+    // console.log("🚩 => gridLayout:", gridLayout);
   }, [gridData]);
 
-  // setGridLayout(grid);
+  useEffect(() => {
+    // const grid = new Grid(gridMatrix);
+    // const pathFinder = new AStarFinder();
+    // const path = pathFinder.findPath(
+    //   gridData.startNode[0],
+    //   gridData.startNode[1],
+    //   gridData.endNode[0],
+    //   gridData.endNode[1],
+    //   grid
+    // );
+    // console.log("🚩 => path:", path);
+  }, [gridMatrix]);
 
-  // const grid = new Grid(gridMatrix);
-  // console.log("🚩 => grid:", grid);
-  const pathFinder = new AStarFinder();
+  // const path = pathFinder.findPath(startX, startY, endX, endY, grid);
 
   // const path = pathFinder.findPath(
-  //   gridStartNode[0],
-  //   gridStartNode[1],
-  //   gridEndNode[0],
-  //   gridEndNode[1],
+  //   gridData.gridStartNode[0],
+  //   gridData.gridStartNode[1],
+  //   gridData.gridEndNode[0],
+  //   gridData.gridEndNode[1],
   //   grid
   // );
 
@@ -44,8 +49,20 @@ const GridLayout = ({ gridData }) => {
 
   const handleNodeClick = (row, col) => {
     const updatedMatrix = [...gridMatrix];
-    updatedMatrix[row][col] = 1;
+    updatedMatrix[row][col] = 0;
     setGridMatrix(updatedMatrix);
+
+    // const grid = new Grid(gridMatrix);
+    // const pathFinder = new AStarFinder();
+
+    // const path = pathFinder.findPath(
+    //   gridData.gridStartNode[0],
+    //   gridData.gridStartNode[1],
+    //   gridData.gridEndNode[0],
+    //   gridData.gridEndNode[1],
+    //   grid
+    // );
+    // console.log("🚩 => path:", path);
   };
 
   return (
@@ -63,7 +80,7 @@ const GridLayout = ({ gridData }) => {
           return <StartGridNode key={i} />;
         } else if (row === endRow && col === endCol) {
           return <EndGridNode key={i} />;
-        } else if (value === 0) {
+        } else if (value === 1) {
           return (
             <GridNode
               key={i}
