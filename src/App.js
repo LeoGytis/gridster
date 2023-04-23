@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import GridController from "./GridController";
 import GridLayout from "./GirdLayout";
-import { Grid, AStarFinder } from "pathfinding";
-import { generateGridMatrix } from "./generateGridMatrix";
 
 function App() {
   const [gridData, setGridData] = useState({
@@ -12,21 +10,9 @@ function App() {
     startNode: [0, 0],
     endNode: [9, 9]
   });
-  // const [gridStartNode, setGridStartNode] = useState([0, 0]);
-  // const [gridEndNode, setGridEndNode] = useState([9, 9]);
-  const [gridMatrix, setGridMatrix] = useState([]);
 
-  // useEffect(() => {
-  //   setGridMatrix(newMatrix);
-  // }, []);
-
-  const handleGenerateGrid = ({
-    rowsCount,
-    columnsCount,
-    startNode,
-    endNode
-  }) => {
-    setGridData({ rowsCount, columnsCount, startNode, endNode });
+  const handleGenerateGrid = (gridData) => {
+    setGridData(gridData);
   };
 
   return (
@@ -34,16 +20,7 @@ function App() {
       <MainContainer>
         <SimpleContainer>
           <GridController onGenerate={handleGenerateGrid} />
-          {gridData && (
-            <GridLayout
-              gridData={gridData}
-              rowsCount={gridData.rowsCount}
-              columnsCount={gridData.columnsCount}
-              startNode={gridData.startNode}
-              endNode={gridData.endNode}
-              // path={path}
-            />
-          )}
+          {gridData && <GridLayout gridData={gridData} />}
         </SimpleContainer>
       </MainContainer>
     </>

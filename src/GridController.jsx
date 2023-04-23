@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const GridController = ({ onGenerate }) => {
-  const [rowsCount, setRowsCount] = useState(10);
-  const [columnsCount, setColumnsCount] = useState(10);
-  const startNode = [getRandomInt(0, rowsCount), 0]; // kodel nebuna 9?
-  const endNode = [getRandomInt(0, rowsCount), columnsCount - 1];
+  const [gridData, setGridData] = useState({
+    rowsCount: 10,
+    columnsCount: 10,
+    startNode: [getRandomInt(0, 10), 0],
+    endNode: [getRandomInt(0, 10), 9]
+  });
 
   function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -18,7 +20,10 @@ const GridController = ({ onGenerate }) => {
     if (isNaN(value) || value < 1 || value > 20) {
       return;
     }
-    setRowsCount(value);
+    setGridData({
+      ...gridData,
+      rowsCount: value
+    });
   };
 
   const handleColumnsChange = (event) => {
@@ -26,11 +31,14 @@ const GridController = ({ onGenerate }) => {
     if (isNaN(value) || value < 1 || value > 20) {
       return;
     }
-    setColumnsCount(value);
+    setGridData({
+      ...gridData,
+      columnsCount: value
+    });
   };
 
   const handleGenerateClick = () => {
-    onGenerate(rowsCount, columnsCount, startNode, endNode);
+    onGenerate(gridData);
   };
 
   return (
@@ -40,7 +48,7 @@ const GridController = ({ onGenerate }) => {
         <GridInput
           type="text"
           placeholder="10"
-          value={rowsCount}
+          value={gridData.rowsCount}
           onChange={handleRowsChange}
         />
       </InputValue>
@@ -50,7 +58,7 @@ const GridController = ({ onGenerate }) => {
         <GridInput
           type="text"
           placeholder="10"
-          value={columnsCount}
+          value={gridData.columnsCount}
           onChange={handleColumnsChange}
         />
       </InputValue>
