@@ -5,6 +5,7 @@ import { generateGridMatrix } from "./generateGridMatrix";
 
 const GridLayout = ({ gridData }) => {
   const [gridMatrix, setGridMatrix] = useState(generateGridMatrix(10, 10));
+  // const [gridMatrix, setGridMatrix] = useState(generateGridMatrix(gridData));
   // console.log("🚩 => gridMatrix:", gridMatrix);
   const [gridLayout, setGridLayout] = useState(new Grid(10, 10));
   const [startX, startY] = gridData.startNode;
@@ -14,17 +15,18 @@ const GridLayout = ({ gridData }) => {
     setGridMatrix(
       generateGridMatrix(gridData.rowsCount, gridData.columnsCount)
     );
+
+    // setGridMatrix(generateGridMatrix(gridData));
   }, [gridData]);
 
   useEffect(() => {
     const grid = new Grid(gridMatrix);
-    console.log("🚩 => grid:", grid);
+    var gridBackup = grid.clone();
 
     const pathFinder = new AStarFinder();
     // var newPath = Util.smoothenPath(grid, path);
 
-    const path = pathFinder.findPath(startX, startY, endX, endY, grid);
-    console.log("🚩 => path:", path);
+    const path = pathFinder.findPath(startX, startY, endX, endY, gridBackup);
 
     if (path.length > 0) {
       for (const [row, col] of path) {
