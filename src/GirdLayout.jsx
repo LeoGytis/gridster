@@ -1,48 +1,41 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Grid, AStarFinder } from "pathfinding";
+import { Grid, AStarFinder, BiAStarFinder, JumpPointFinder } from "pathfinding";
 import { generateGridMatrix } from "./generateGridMatrix";
 
 const GridLayout = ({ gridData }) => {
   const [gridMatrix, setGridMatrix] = useState(generateGridMatrix(10, 10));
-  console.log("🚩 => gridMatrix:", gridMatrix);
+  // console.log("🚩 => gridMatrix:", gridMatrix);
   const [gridLayout, setGridLayout] = useState(new Grid(10, 10));
-  // const [startX, startY] = gridData.gridStartNode;
-  // const [endX, endY] = gridData.gridEndNode;
-
-  // const grid = new Grid(rowsCount, columnsCount);
+  const [startX, startY] = gridData.startNode;
+  const [endX, endY] = gridData.endNode;
 
   useEffect(() => {
     setGridMatrix(
       generateGridMatrix(gridData.rowsCount, gridData.columnsCount)
     );
-    const grid = new Grid(gridMatrix);
-    setGridLayout(grid);
-    // console.log("🚩 => gridLayout:", gridLayout);
   }, [gridData]);
 
   useEffect(() => {
-    // const grid = new Grid(gridMatrix);
-    // const pathFinder = new AStarFinder();
-    // const path = pathFinder.findPath(
-    //   gridData.startNode[0],
-    //   gridData.startNode[1],
-    //   gridData.endNode[0],
-    //   gridData.endNode[1],
-    //   grid
-    // );
-    // console.log("🚩 => path:", path);
+    const grid = new Grid(gridMatrix);
+    console.log("🚩 => grid:", grid);
+
+    const pathFinder = new AStarFinder();
+    // var newPath = Util.smoothenPath(grid, path);
+
+    const path = pathFinder.findPath(startX, startY, endX, endY, grid);
+    console.log("🚩 => path:", path);
+
+    if (path.length > 0) {
+      for (const [row, col] of path) {
+        setGridMatrix((prevGridMatrix) => {
+          const newGridMatrix = [...prevGridMatrix];
+          newGridMatrix[row][col] = 2;
+          return newGridMatrix;
+        });
+      }
+    }
   }, [gridMatrix]);
-
-  // const path = pathFinder.findPath(startX, startY, endX, endY, grid);
-
-  // const path = pathFinder.findPath(
-  //   gridData.gridStartNode[0],
-  //   gridData.gridStartNode[1],
-  //   gridData.gridEndNode[0],
-  //   gridData.gridEndNode[1],
-  //   grid
-  // );
 
   // grid.setWalkableAt(5, 5, false);
   // var gridBackup = grid.clone();
@@ -51,18 +44,6 @@ const GridLayout = ({ gridData }) => {
     const updatedMatrix = [...gridMatrix];
     updatedMatrix[row][col] = 0;
     setGridMatrix(updatedMatrix);
-
-    // const grid = new Grid(gridMatrix);
-    // const pathFinder = new AStarFinder();
-
-    // const path = pathFinder.findPath(
-    //   gridData.gridStartNode[0],
-    //   gridData.gridStartNode[1],
-    //   gridData.gridEndNode[0],
-    //   gridData.gridEndNode[1],
-    //   grid
-    // );
-    // console.log("🚩 => path:", path);
   };
 
   return (
@@ -87,6 +68,8 @@ const GridLayout = ({ gridData }) => {
               onClick={() => handleNodeClick(row, col)}
             ></GridNode>
           );
+        } else if (value === 2) {
+          return <PathGridNode key={i} />;
         } else {
           return <ClearGridNode key={i} />;
         }
@@ -164,5 +147,5 @@ const PathGridNode = styled(GridNode)`
 `;
 
 const ClearGridNode = styled(GridNode)`
-  background-color: white;
+  background-color: pink;
 `;

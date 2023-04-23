@@ -27,6 +27,8 @@ function App() {
   );
 }
 
+// npm install -d -g gulp
+
 export default App;
 
 const MainContainer = styled.div`
