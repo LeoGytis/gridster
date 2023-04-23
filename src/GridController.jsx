@@ -38,7 +38,16 @@ const GridController = ({ onGenerate }) => {
   };
 
   const handleGenerateClick = () => {
-    onGenerate(gridData);
+    const newStartNode = [getRandomInt(0, gridData.rowsCount), 0];
+    const newEndNode = [
+      getRandomInt(0, gridData.rowsCount),
+      gridData.columnsCount - 1
+    ];
+    onGenerate({
+      ...gridData,
+      startNode: newStartNode,
+      endNode: newEndNode
+    });
   };
 
   return (

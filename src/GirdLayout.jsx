@@ -5,23 +5,21 @@ import { generateGridMatrix } from "./generateGridMatrix";
 
 const GridLayout = ({ gridData }) => {
   const [gridMatrix, setGridMatrix] = useState(generateGridMatrix(10, 10));
-  console.log("🚩 => gridMatrix:", gridMatrix);
   const [gridLayout, setGridLayout] = useState(new Grid(10, 10));
 
-  function setAllNodesUnwalkable(grid) {
-    for (let i = 0; i < grid.nodes.length; i++) {
-      for (let j = 0; j < grid.nodes[i].length; j++) {
-        grid.setWalkableAt(i, j, false);
-      }
-    }
-  }
+  // function setAllNodesUnwalkable(grid) {
+  //   for (let i = 0; i < grid.nodes.length; i++) {
+  //     for (let j = 0; j < grid.nodes[i].length; j++) {
+  //       grid.setWalkableAt(i, j, false);
+  //     }
+  //   }
+  // }
   // const grid = new Grid(rowsCount, columnsCount);
 
   useEffect(() => {
     setGridMatrix(
       generateGridMatrix(gridData.rowsCount, gridData.columnsCount)
     );
-
     // const grid = new Grid(rowsCount, columnsCount);
     // setGridLayout();
     // setGridLayout(grid);
@@ -58,8 +56,14 @@ const GridLayout = ({ gridData }) => {
       {gridMatrix.flat().map((value, i) => {
         const row = Math.floor(i / gridData.columnsCount);
         const col = i % gridData.columnsCount;
+        const [startRow, startCol] = gridData.startNode;
+        const [endRow, endCol] = gridData.endNode;
 
-        if (value === 0) {
+        if (row === startRow && col === startCol) {
+          return <StartGridNode key={i} />;
+        } else if (row === endRow && col === endCol) {
+          return <EndGridNode key={i} />;
+        } else if (value === 0) {
           return (
             <GridNode
               key={i}
