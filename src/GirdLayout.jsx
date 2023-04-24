@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Grid, AStarFinder, BiAStarFinder, JumpPointFinder } from "pathfinding";
+import { Grid, AStarFinder } from "pathfinding";
 import { generateGridMatrix } from "./generateGridMatrix";
 
 const GridLayout = ({ gridData }) => {
   const [gridMatrix, setGridMatrix] = useState(generateGridMatrix(gridData));
-  // console.log("🚩 => gridMatrix:", gridMatrix);
-  const [gridLayout, setGridLayout] = useState(new Grid(10, 10));
   const [startX, startY] = gridData.startNode;
   const [endX, endY] = gridData.endNode;
 
@@ -18,35 +16,31 @@ const GridLayout = ({ gridData }) => {
     const grid = new Grid(gridMatrix);
     console.log("🚩 => gridMatrix:", gridMatrix);
     console.log("🚩 => grid:", grid);
-    var gridBackup = grid.clone();
 
     const pathFinder = new AStarFinder();
-    // var newPath = Util.smoothenPath(grid, path);
-
-    const path = pathFinder.findPath(startX, startY, endX, endY, gridBackup);
+    const path = pathFinder.findPath(startY, startX, endY, endX, grid);
     console.log("🚩 => path:", path);
 
     if (path.length > 0) {
       for (const [row, col] of path) {
         setGridMatrix((prevGridMatrix) => {
           const newGridMatrix = [...prevGridMatrix];
-          newGridMatrix[row][col] = 2;
+          newGridMatrix[col][row] = 2;
           return newGridMatrix;
         });
       }
     }
   }, [gridMatrix]);
 
-  // useEffect(() => {
-  //   console.log("🚩 => gridMatrix:", gridMatrix);
-  // }, [gridMatrix]);
-
-  // grid.setWalkableAt(5, 5, false);
-  // var gridBackup = grid.clone();
-
-  const handleNodeClick = (row, col) => {
+  const handleGridNodeClick = (row, col) => {
     const updatedMatrix = [...gridMatrix];
     updatedMatrix[row][col] = 0;
+    setGridMatrix(updatedMatrix);
+  };
+
+  const handleClearNodeClick = (row, col) => {
+    const updatedMatrix = [...gridMatrix];
+    updatedMatrix[row][col] = 1;
     setGridMatrix(updatedMatrix);
   };
 
@@ -69,50 +63,22 @@ const GridLayout = ({ gridData }) => {
           return (
             <GridNode
               key={i}
-              onClick={() => handleNodeClick(row, col)}
+              onClick={() => handleGridNodeClick(row, col)}
             ></GridNode>
           );
         } else if (value === 2) {
           return <PathGridNode key={i} />;
         } else {
-          return <ClearGridNode key={i} />;
+          return (
+            <ClearGridNode
+              key={i}
+              onClick={() => handleClearNodeClick(row, col)}
+            />
+          );
         }
       })}
     </GridLayoutContainer>
   );
-
-  // return (
-  // <GridLayoutContainer rowsCount={rowsCount} columnsCount={columnsCount}>
-  //   {Array(grid.height * grid.width)
-  //     .fill()
-  //     .map((_, i) => {
-  //       const [startRow, startCol] = startNode;
-  //       const [endRow, endCol] = endNode;
-
-  //       const row = Math.floor(i / columnsCount);
-  //       const col = i % columnsCount;
-
-  //       const isPathNode = path.some(([r, c]) => r === row && c === col);
-  //       const isClearNode = grid.nodes[i] && grid.nodes[i].walkable;
-
-  //       if (row === startRow && col === startCol) {
-  //         return <StartGridNode key={i} />;
-  //       } else if (row === endRow && col === endCol) {
-  //         return <EndGridNode key={i} />;
-  //       } else if (isPathNode) {
-  //         return <PathGridNode key={i} />;
-  //       } else if (isClearNode) {
-  //         return <ClearGridNode key={i} />;
-  //       } else {
-  //         return (
-  //           <GridNode key={i} onClick={() => handleNodeClick(row, col)}>
-  //             {row} - {col}
-  //           </GridNode>
-  //         );
-  //       }
-  //     })}
-  // </GridLayoutContainer>;
-  // );
 };
 
 export default GridLayout;
@@ -139,11 +105,19 @@ const GridNode = styled.button`
 `;
 
 const StartGridNode = styled(GridNode)`
+  cursor: auto;
   background-color: #7ed321;
+  &:hover {
+    background-color: #7ed321;
+  }
 `;
 
 const EndGridNode = styled(GridNode)`
+  cursor: auto;
   background-color: #639530;
+  &:hover {
+    background-color: #639530;
+  }
 `;
 
 const PathGridNode = styled(GridNode)`
