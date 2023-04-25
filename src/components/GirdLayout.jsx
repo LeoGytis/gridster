@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Grid, AStarFinder } from "pathfinding";
-import { generateGridMatrix } from "../generateGridMatrix";
+import { generateGridMatrix } from "../functions/generateGridMatrix";
 
 const GridLayout = ({ gridData }) => {
   const [gridMatrix, setGridMatrix] = useState(generateGridMatrix(gridData));
-  console.log("🚩 => gridMatrix:", gridMatrix);
   const [startX, startY] = gridData.startNode;
   const [endX, endY] = gridData.endNode;
 
@@ -15,10 +14,8 @@ const GridLayout = ({ gridData }) => {
 
   useEffect(() => {
     const grid = new Grid(gridMatrix);
-
     const pathFinder = new AStarFinder();
     const path = pathFinder.findPath(startY, startX, endY, endX, grid);
-    console.log("🚩 => path:", path);
 
     if (path.length > 0) {
       const gridMatrixPath = [...gridMatrix];
@@ -104,23 +101,19 @@ const GridNode = styled.button`
 const StartGridNode = styled(GridNode)`
   cursor: auto;
   background-color: #7ed321;
-  &:hover {
-    background-color: #7ed321;
-  }
+  pointer-events: none;
 `;
 
 const EndGridNode = styled(GridNode)`
   cursor: auto;
   background-color: #639530;
-  &:hover {
-    background-color: #639530;
-  }
+  pointer-events: none;
 `;
 
 const PathGridNode = styled(GridNode)`
-  background-color: #ffd700;
+  background-color: #f5a623;
 `;
 
 const ClearGridNode = styled(GridNode)`
-  background-color: pink;
+  background-color: #ffffff;
 `;

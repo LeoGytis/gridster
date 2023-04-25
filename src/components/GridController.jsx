@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import GridsterLogo from "../task/Gridster-Logo.png";
 
 const GridController = ({ handleGenerateGrid }) => {
   const [gridData, setGridData] = useState({
@@ -55,27 +56,29 @@ const GridController = ({ handleGenerateGrid }) => {
 
   return (
     <MainContainer>
-      <InputValue>
-        Rows
-        <GridInput
-          type="text"
-          placeholder="10"
-          value={gridData.rowsCount}
-          onChange={handleRowsChange}
-        />
-      </InputValue>
-      <Sign>x</Sign>
-      <InputValue>
-        Columns
-        <GridInput
-          type="text"
-          placeholder="10"
-          value={gridData.columnsCount}
-          onChange={handleColumnsChange}
-        />
-      </InputValue>
-
-      <GenerateButton onClick={handleGenerateClick}>Generate</GenerateButton>
+      <Logo src={GridsterLogo} />
+      <ControllerContainer>
+        <InputValue>
+          Rows
+          <GridInput
+            type="text"
+            placeholder="10"
+            value={gridData.rowsCount}
+            onChange={handleRowsChange}
+          />
+        </InputValue>
+        <Sign>x</Sign>
+        <InputValue>
+          Columns
+          <GridInput
+            type="text"
+            placeholder="10"
+            value={gridData.columnsCount}
+            onChange={handleColumnsChange}
+          />
+        </InputValue>
+        <GenerateButton onClick={handleGenerateClick}>Generate</GenerateButton>
+      </ControllerContainer>
     </MainContainer>
   );
 };
@@ -84,9 +87,20 @@ export default GridController;
 
 const MainContainer = styled.div`
   display: flex;
+  flex-direction: column;
+`;
+
+const Logo = styled.img`
+  width: 50%;
+  align-self: flex-start;
+  padding: 30px 0;
+`;
+
+const ControllerContainer = styled.div`
+  display: flex;
   align-items: flex-end;
   gap: 16px;
-  padding: 20px 150px 20px 40px;
+  padding: 20px 150px 20px 30px;
   background-color: #f1f1f1;
   border-radius: 5px;
   margin-bottom: 40px;

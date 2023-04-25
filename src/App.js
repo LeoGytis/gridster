@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import GridController from "./components/GridController";
 import GridLayout from "./components/GirdLayout";
-import Logo from "./task/Gridster-Logo.png";
 
 function App() {
   const [gridData, setGridData] = useState({
@@ -20,7 +19,6 @@ function App() {
     <>
       <MainContainer>
         <SimpleContainer>
-          <GridsterLogo src={Logo} />
           <GridController handleGenerateGrid={handleGenerateGrid} />
           <GridLayout gridData={gridData} />
         </SimpleContainer>
@@ -36,7 +34,6 @@ const MainContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* background-color: #282c34; */
 `;
 
 const SimpleContainer = styled.div`
@@ -44,12 +41,5 @@ const SimpleContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px 100px;
   background-color: white;
-`;
-
-const GridsterLogo = styled.img`
-  width: 50%;
-  align-self: flex-start;
-  padding-bottom: 30px;
 `;
