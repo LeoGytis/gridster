@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import GridsterLogo from "../task/Gridster-Logo.png";
+import { getRandomInt } from "../functions/getRandomInt";
 
 const GridController = ({ handleGenerateGrid }) => {
   const [gridData, setGridData] = useState({
@@ -9,12 +10,7 @@ const GridController = ({ handleGenerateGrid }) => {
     startNode: [getRandomInt(0, 10), 0],
     endNode: [getRandomInt(0, 10), 9]
   });
-
-  function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min);
-  }
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleRowsChange = (event) => {
     const value = parseInt(event.target.value);
@@ -40,7 +36,9 @@ const GridController = ({ handleGenerateGrid }) => {
 
   const handleGenerateClick = () => {
     if (gridData.rowsCount === 1 && gridData.columnsCount === 1) {
-      return;
+      return setErrorMessage(
+        "Rows and Columns can not be 1 and 1 at the same time"
+      );
     }
     const newStartNode = [getRandomInt(0, gridData.rowsCount), 0];
     const newEndNode = [
@@ -79,6 +77,7 @@ const GridController = ({ handleGenerateGrid }) => {
         </InputValue>
         <GenerateButton onClick={handleGenerateClick}>Generate</GenerateButton>
       </ControllerContainer>
+      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </MainContainer>
   );
 };
@@ -140,4 +139,11 @@ const GenerateButton = styled.button`
   &:active {
     background-color: #235896;
   }
+`;
+
+const ErrorMessage = styled.label`
+  align-self: center;
+  padding: 16px;
+  color: red;
+  font-size: 1.4rem;
 `;

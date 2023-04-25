@@ -12,6 +12,7 @@ const GridLayout = ({ gridData }) => {
     setGridMatrix(generateGridMatrix(gridData));
   }, [gridData]);
 
+  //Calculates the shortest path and updates the grid matrix state accordingly
   useEffect(() => {
     const grid = new Grid(gridMatrix);
     const pathFinder = new AStarFinder();

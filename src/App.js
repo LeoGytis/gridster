@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import GridController from "./components/GridController";
 import GridLayout from "./components/GirdLayout";
+import { getRandomInt } from "./functions/getRandomInt";
 
 function App() {
   const [gridData, setGridData] = useState({
     rowsCount: 10,
     columnsCount: 10,
-    startNode: [0, 0],
-    endNode: [9, 9]
+    startNode: [getRandomInt(0, 10), 0],
+    endNode: [getRandomInt(0, 10), 9]
   });
 
   const handleGenerateGrid = (gridData) => {
