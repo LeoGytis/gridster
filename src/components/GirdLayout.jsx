@@ -45,8 +45,9 @@ const GridLayout = ({ gridData }) => {
       columnsCount={gridData.columnsCount}
     >
       {gridMatrix.flat().map((value, i) => {
-        const row = Math.floor(i / gridData.columnsCount);
-        const col = i % gridData.columnsCount;
+        const row = Math.floor(i / gridData.columnsCount); // Calculate the row based on its index
+        const col = i % gridData.columnsCount; // Calculate the column based on its index
+
         const [startRow, startCol] = gridData.startNode;
         const [endRow, endCol] = gridData.endNode;
 
