@@ -50,6 +50,7 @@ const GridController = ({ handleGenerateGrid }) => {
       startNode: newStartNode,
       endNode: newEndNode
     });
+    setErrorMessage();
   };
 
   return (
@@ -143,7 +144,7 @@ const GenerateButton = styled.button`
 
 const ErrorMessage = styled.label`
   align-self: center;
-  padding: 16px;
+  padding-bottom: 16px;
   color: red;
   font-size: 1.4rem;
 `;
