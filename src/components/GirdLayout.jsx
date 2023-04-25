@@ -5,8 +5,8 @@ import { generateGridMatrix } from "../functions/generateGridMatrix";
 
 const GridLayout = ({ gridData }) => {
   const [gridMatrix, setGridMatrix] = useState(generateGridMatrix(gridData));
-  const [startX, startY] = gridData.startNode;
-  const [endX, endY] = gridData.endNode;
+  const [generatedPath, setGeneratedPath] = useState([]);
+  console.log("🚩 => generatedPath:", generatedPath);
 
   useEffect(() => {
     setGridMatrix(generateGridMatrix(gridData));
@@ -14,16 +14,18 @@ const GridLayout = ({ gridData }) => {
 
   //Calculates the shortest path and updates the grid matrix state accordingly
   useEffect(() => {
+    setGeneratedPath([]);
     const grid = new Grid(gridMatrix);
     const pathFinder = new AStarFinder();
-    const path = pathFinder.findPath(startY, startX, endY, endX, grid);
-
+    const path = pathFinder.findPath(
+      gridData.startNode[1],
+      gridData.startNode[0],
+      gridData.endNode[1],
+      gridData.endNode[0],
+      grid
+    );
     if (path.length > 0) {
-      const gridMatrixPath = [...gridMatrix];
-      for (const [row, col] of path) {
-        gridMatrixPath[col][row] = 2;
-      }
-      setGridMatrix(gridMatrixPath);
+      setGeneratedPath(path);
     }
   }, [gridMatrix]);
 
@@ -43,17 +45,15 @@ const GridLayout = ({ gridData }) => {
     <GridLayoutContainer
       rowsCount={gridData.rowsCount}
       columnsCount={gridData.columnsCount}
+      generatedPath={generatedPath}
     >
       {gridMatrix.flat().map((value, i) => {
         const row = Math.floor(i / gridData.columnsCount); // Calculate the row based on its index
         const col = i % gridData.columnsCount; // Calculate the column based on its index
 
-        const [startRow, startCol] = gridData.startNode;
-        const [endRow, endCol] = gridData.endNode;
-
-        if (row === startRow && col === startCol) {
+        if (row === gridData.startNode[0] && col === gridData.startNode[1]) {
           return <StartGridNode key={i} />;
-        } else if (row === endRow && col === endCol) {
+        } else if (row === gridData.endNode[0] && col === gridData.endNode[1]) {
           return <EndGridNode key={i} />;
         } else if (value === 1) {
           return (
@@ -62,7 +62,10 @@ const GridLayout = ({ gridData }) => {
               onClick={() => handleGridNodeClick(row, col)}
             ></GridNode>
           );
-        } else if (value === 2) {
+        } else if (
+          generatedPath.length > 0 &&
+          generatedPath.some(([c, r]) => r === row && c === col)
+        ) {
           return <PathGridNode key={i} />;
         } else {
           return (

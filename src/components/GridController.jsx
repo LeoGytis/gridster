@@ -34,6 +34,17 @@ const GridController = ({ handleGenerateGrid }) => {
     });
   };
 
+  // const handleValueChange = (event, property) => {
+  //   const value = parseInt(event.target.value);
+  //   if (isNaN(value) || value < 1 || value > 20) {
+  //     return;
+  //   }
+  //   setGridData({
+  //     ...gridData,
+  //     property: value
+  //   });
+  // };
+
   const handleGenerateClick = () => {
     if (gridData.rowsCount === 1 && gridData.columnsCount === 1) {
       return setErrorMessage(
@@ -64,6 +75,7 @@ const GridController = ({ handleGenerateGrid }) => {
             placeholder="10"
             value={gridData.rowsCount}
             onChange={handleRowsChange}
+            // onChange={(e) => handleValueChange(e, "rowsCount")}
           />
         </InputValue>
         <Sign>x</Sign>
@@ -74,6 +86,8 @@ const GridController = ({ handleGenerateGrid }) => {
             placeholder="10"
             value={gridData.columnsCount}
             onChange={handleColumnsChange}
+
+            // onChange={(e) => handleValueChange(e, "columnsCount")}
           />
         </InputValue>
         <GenerateButton onClick={handleGenerateClick}>Generate</GenerateButton>
