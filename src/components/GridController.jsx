@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const GridController = ({ onGenerate }) => {
+const GridController = ({ handleGenerateGrid }) => {
   const [gridData, setGridData] = useState({
     rowsCount: 10,
     columnsCount: 10,
@@ -38,12 +38,15 @@ const GridController = ({ onGenerate }) => {
   };
 
   const handleGenerateClick = () => {
+    if (gridData.rowsCount === 1 && gridData.columnsCount === 1) {
+      return;
+    }
     const newStartNode = [getRandomInt(0, gridData.rowsCount), 0];
     const newEndNode = [
       getRandomInt(0, gridData.rowsCount),
       gridData.columnsCount - 1
     ];
-    onGenerate({
+    handleGenerateGrid({
       ...gridData,
       startNode: newStartNode,
       endNode: newEndNode

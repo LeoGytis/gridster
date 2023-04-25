@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import GridController from "./GridController";
-import GridLayout from "./GirdLayout";
+import GridController from "./components/GridController";
+import GridLayout from "./components/GirdLayout";
 import Logo from "./task/Gridster-Logo.png";
 
 function App() {
@@ -21,15 +21,13 @@ function App() {
       <MainContainer>
         <SimpleContainer>
           <GridsterLogo src={Logo} />
-          <GridController onGenerate={handleGenerateGrid} />
-          {gridData && <GridLayout gridData={gridData} />}
+          <GridController handleGenerateGrid={handleGenerateGrid} />
+          <GridLayout gridData={gridData} />
         </SimpleContainer>
       </MainContainer>
     </>
   );
 }
-
-// npm install -d -g gulp
 
 export default App;
 
@@ -38,7 +36,7 @@ const MainContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #282c34;
+  /* background-color: #282c34; */
 `;
 
 const SimpleContainer = styled.div`
@@ -46,12 +44,12 @@ const SimpleContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px 100px;
+  padding: 40px 100px;
   background-color: white;
 `;
 
 const GridsterLogo = styled.img`
-  display: flex;
+  width: 50%;
   align-self: flex-start;
-  padding-bottom: 40px;
+  padding-bottom: 30px;
 `;

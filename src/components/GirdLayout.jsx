@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Grid, AStarFinder } from "pathfinding";
-import { generateGridMatrix } from "./generateGridMatrix";
+import { generateGridMatrix } from "../generateGridMatrix";
 
 const GridLayout = ({ gridData }) => {
   const [gridMatrix, setGridMatrix] = useState(generateGridMatrix(gridData));
+  console.log("🚩 => gridMatrix:", gridMatrix);
   const [startX, startY] = gridData.startNode;
   const [endX, endY] = gridData.endNode;
 
@@ -14,21 +15,17 @@ const GridLayout = ({ gridData }) => {
 
   useEffect(() => {
     const grid = new Grid(gridMatrix);
-    console.log("🚩 => gridMatrix:", gridMatrix);
-    console.log("🚩 => grid:", grid);
 
     const pathFinder = new AStarFinder();
     const path = pathFinder.findPath(startY, startX, endY, endX, grid);
     console.log("🚩 => path:", path);
 
     if (path.length > 0) {
+      const gridMatrixPath = [...gridMatrix];
       for (const [row, col] of path) {
-        setGridMatrix((prevGridMatrix) => {
-          const newGridMatrix = [...prevGridMatrix];
-          newGridMatrix[col][row] = 2;
-          return newGridMatrix;
-        });
+        gridMatrixPath[col][row] = 2;
       }
+      setGridMatrix(gridMatrixPath);
     }
   }, [gridMatrix]);
 
