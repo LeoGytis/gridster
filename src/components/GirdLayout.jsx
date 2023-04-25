@@ -6,7 +6,6 @@ import { generateGridMatrix } from "../functions/generateGridMatrix";
 const GridLayout = ({ gridData }) => {
   const [gridMatrix, setGridMatrix] = useState(generateGridMatrix(gridData));
   const [generatedPath, setGeneratedPath] = useState([]);
-  console.log("🚩 => generatedPath:", generatedPath);
 
   useEffect(() => {
     setGridMatrix(generateGridMatrix(gridData));
@@ -64,9 +63,14 @@ const GridLayout = ({ gridData }) => {
           );
         } else if (
           generatedPath.length > 0 &&
-          generatedPath.some(([c, r]) => r === row && c === col)
+          generatedPath.some(([c, r]) => r === row && c === col) // Check generatedPath and gridMatrix arrays
         ) {
-          return <PathGridNode key={i} />;
+          return (
+            <PathGridNode
+              key={i}
+              onClick={() => handleClearNodeClick(row, col)}
+            />
+          );
         } else {
           return (
             <ClearGridNode
