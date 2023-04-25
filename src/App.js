@@ -4,6 +4,10 @@ import GridController from "./components/GridController";
 import GridLayout from "./components/GirdLayout";
 import { getRandomInt } from "./functions/getRandomInt";
 
+// This react project is using these libraries
+// npm install pathfinding
+// npm install styled-components
+
 function App() {
   const [gridData, setGridData] = useState({
     rowsCount: 10,
