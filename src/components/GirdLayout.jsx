@@ -88,8 +88,8 @@ export default GridLayout;
 
 const GridLayoutContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(${(props) => props.columnsCount}, 1fr);
-  grid-template-rows: repeat(${(props) => props.rowsCount}, 1fr);
+  grid-template-columns: repeat(${({ columnsCount }) => columnsCount}, 1fr);
+  grid-template-rows: repeat(${({ rowsCount }) => rowsCount}, 1fr);
   background-color: #dadada;
 `;
 
