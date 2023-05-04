@@ -21,14 +21,12 @@ function App() {
   };
 
   return (
-    <>
-      <MainContainer>
-        <SimpleContainer>
-          <GridController handleGenerateGrid={handleGenerateGrid} />
-          <GridLayout gridData={gridData} />
-        </SimpleContainer>
-      </MainContainer>
-    </>
+    <MainContainer>
+      <SimpleContainer>
+        <GridController handleGenerateGrid={handleGenerateGrid} />
+        <GridLayout gridData={gridData} />
+      </SimpleContainer>
+    </MainContainer>
   );
 }
 
