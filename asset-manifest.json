@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/gridster/static/css/main.e6c13ad2.css",
+    "main.js": "/gridster/static/js/main.f71d360e.js",
+    "static/js/787.71e8c883.chunk.js": "/gridster/static/js/787.71e8c883.chunk.js",
+    "static/media/Gridster-Logo.png": "/gridster/static/media/Gridster-Logo.65a570747b2e923ed153.png",
+    "index.html": "/gridster/index.html",
+    "main.e6c13ad2.css.map": "/gridster/static/css/main.e6c13ad2.css.map",
+    "main.f71d360e.js.map": "/gridster/static/js/main.f71d360e.js.map",
+    "787.71e8c883.chunk.js.map": "/gridster/static/js/787.71e8c883.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.f71d360e.js"
+  ]
+}
